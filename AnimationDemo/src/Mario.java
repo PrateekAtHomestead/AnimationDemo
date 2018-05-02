@@ -24,7 +24,11 @@ public class Mario extends Sprite {
 	}
 
 	public void act(ArrayList<Shape> obstacles) {
-		super.moveByAmount(0, 5);
+		for(Shape obstacle : obstacles) {
+			if(y + MARIO_HEIGHT < obstacle.getBounds().getY()) {
+				super.moveByAmount(0, 2);
+			}
+		}
 	}
 
 
