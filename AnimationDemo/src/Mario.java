@@ -9,27 +9,47 @@ public class Mario extends Sprite {
 
 	public static final int MARIO_WIDTH = 40;
 	public static final int MARIO_HEIGHT = 60;
+	private double xVelocity, yVelocity;
+	private boolean onPlatform;
+	private int currentDirection;
 
 	public Mario(PImage img, int x, int y) {
 		super(img, x, y, MARIO_WIDTH, MARIO_HEIGHT);
+		xVelocity = 0;
+		yVelocity = 0;
+		onPlatform = false;
+		currentDirection = 0;
 	}
 
 	// METHODS
 	public void walk(int dir) {
-		moveByAmount(dir * 10, 0);
+		if(dir != currentDirection)
+			xVelocity = 0;
+		if(onPlatform)
+			x += dir* 5;
+		else if(xVelocity < 4 && xVelocity > -4) 
+			xVelocity += dir * 0.4;
+		currentDirection = dir;
 	}
 
 	public void jump() {
-		super.moveByAmount(0, -4);
-	}
-
-	public void act(ArrayList<Shape> obstacles) {
-		for(Shape obstacle : obstacles) {
-			if(y + MARIO_HEIGHT < obstacle.getBounds().getY()) {
-				super.moveByAmount(0, 2);
-			}
+		if(onPlatform) {
+			yVelocity -= 9.3;
+			onPlatform = false;
 		}
 	}
 
+	public void act(ArrayList<Shape> obstacles) {
+		yVelocity += 0.25;
+		this.moveByAmount(xVelocity, yVelocity);
+		for(Shape s : obstacles) {
+			if(s.getBounds().intersects(x, y, MARIO_WIDTH, MARIO_HEIGHT)) {
+				yVelocity = 0;
+				y -= 0.25;
+				onPlatform = true;
+				xVelocity = 0;
+			}
+		}
+	}
 
 }
