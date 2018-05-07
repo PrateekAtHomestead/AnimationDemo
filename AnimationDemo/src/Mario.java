@@ -26,26 +26,26 @@ public class Mario extends Sprite {
 		if(dir != currentDirection)
 			xVelocity = 0;
 		if(onPlatform)
-			x += dir* 5;
+			x += dir* 7;
 		else if(xVelocity < 4 && xVelocity > -4) 
-			xVelocity += dir * 0.4;
+			xVelocity += dir * 1.3;
 		currentDirection = dir;
 	}
 
 	public void jump() {
 		if(onPlatform) {
-			yVelocity -= 9.3;
+			yVelocity -= 14;
 			onPlatform = false;
 		}
 	}
 
 	public void act(ArrayList<Shape> obstacles) {
-		yVelocity += 0.25;
+		yVelocity += 0.5;
 		this.moveByAmount(xVelocity, yVelocity);
 		for(Shape s : obstacles) {
 			if(s.getBounds().intersects(x, y, MARIO_WIDTH, MARIO_HEIGHT)) {
 				yVelocity = 0;
-				y -= 0.25;
+				y -= 0.5;
 				onPlatform = true;
 				xVelocity = 0;
 			}
