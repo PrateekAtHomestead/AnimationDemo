@@ -38,7 +38,7 @@ public class Mario extends Sprite {
 			onPlatform = false;
 		}
 	}
-
+//is this working hello
 	public void act(ArrayList<Shape> obstacles) {
 		yVelocity += 0.25;
 		this.moveByAmount(xVelocity, yVelocity);
@@ -49,6 +49,7 @@ public class Mario extends Sprite {
 				onPlatform = true;
 				xVelocity = 0;
 			}
+			
 		}
 	}
 
